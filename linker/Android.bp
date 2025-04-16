@@ -80,6 +80,7 @@ cc_binary {
         "linker_libcxx_support.cpp",
         "linker_main.cpp",
         "linker_namespaces.cpp",
+        "linker_non_pie.cpp",
         "linker_logger.cpp",
         "linker_mapped_file_fragment.cpp",
         "linker_phdr.cpp",
@@ -95,8 +96,10 @@ cc_binary {
                 "arch/arm/begin.S",
                 "linker_exidx_static.c",
             ],
-
-            cflags: ["-D__work_around_b_24465209__"],
+            cflags: [
+                "-D__work_around_b_24465209__",
+                "-DENABLE_NON_PIE_SUPPORT"
+            ],
             version_script: "linker.arm.map",
         },
         arm64: {
@@ -129,7 +132,10 @@ cc_binary {
     },
 
     // We need to access Bionic private headers in the linker.
-    include_dirs: ["bionic/libc"],
+    include_dirs: [
+        "bionic/libc",
+        "device/samsung/p4-common/include",
+    ],
 
     // -shared is used to overwrite the -Bstatic and -static
     // flags triggered by LOCAL_FORCE_STATIC_EXECUTABLE.

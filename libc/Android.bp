@@ -47,9 +47,10 @@ libc_common_flags = [
     "-Werror=int-to-pointer-cast",
     "-Werror=type-limits",
     "-Werror",
-
+    
     // Clang's exit-time destructor registration hides __dso_handle, but
     // __dso_handle needs to have default visibility on ARM32. See b/73485611.
+    "-Wno-unicode", 
     "-Wexit-time-destructors",
 ]
 
@@ -565,6 +566,7 @@ cc_library_static {
     arch: {
         arm: {
             exclude_srcs: [
+                "upstream-openbsd/lib/libc/string/memchr.c",
                 "upstream-openbsd/lib/libc/string/strcpy.c",
             ],
             neon: {
@@ -863,6 +865,7 @@ cc_library_static {
     arch: {
         arm: {
             srcs: [
+                "arch-arm/generic/bionic/memchr.S",
                 "arch-arm/generic/bionic/memcmp.S",
                 "arch-arm/generic/bionic/memcpy.S",
                 "arch-arm/generic/bionic/memset.S",
@@ -938,12 +941,27 @@ cc_library_static {
             },
             cortex_a55: {
                 srcs: [
-                    "arch-arm/cortex-a7/bionic/memset.S",
-                    "arch-arm/denver/bionic/memcpy.S",
+                    "upstream-openbsd/lib/libc/string/memmove.c",
+                    "arch-arm/cortex-a9/bionic/new_arm.S",
+                    "arch-arm/cortex-a9/bionic/stpcpy.S",
+                    "arch-arm/cortex-a9/bionic/strcat.S",
+                    "arch-arm/cortex-a9/bionic/strcpy.S",
+                    "arch-arm/cortex-a9/bionic/strlen.S",
 
-                    "arch-arm/krait/bionic/strcmp.S",
+                    "arch-arm/cortex-a15/bionic/strcmp.S",
                 ],
                 exclude_srcs: [
+                    "arch-arm/cortex-a15/bionic/memset.S",
+                    "arch-arm/cortex-a15/bionic/memcpy.S",
+                    "arch-arm/cortex-a15/bionic/strcmp.S",
+                    "upstream-openbsd/lib/libc/string/stpcpy.c",
+                    "upstream-openbsd/lib/libc/string/strcat.c",
+                    "upstream-openbsd/lib/libc/string/strcpy.c",
+                    "arch-arm/generic/bionic/strcmp.S",
+                    "arch-arm/generic/bionic/strcpy.S",
+                    "arch-arm/generic/bionic/strlen.c",
+                    "arch-arm/generic/bionic/memcpy.S",
+                    "arch-arm/generic/bionic/memset.S",
                     "arch-arm/cortex-a15/bionic/memset.S",
                     "arch-arm/cortex-a15/bionic/memcpy.S",
                     "arch-arm/cortex-a15/bionic/strcmp.S",
@@ -987,6 +1005,17 @@ cc_library_static {
             },
             kryo: {
                 srcs: [
+                    "arch-arm/krait/bionic/memcpy.S",
+                    "arch-arm/krait/bionic/memset.S",
+                    "arch-arm/krait/bionic/__strcat_chk.S",
+                    "arch-arm/krait/bionic/__strcpy_chk.S",
+
+                    // Use cortex-a15 versions of strcat/strcpy/strlen.
+                    "arch-arm/cortex-a15/bionic/stpcpy.S",
+                    "arch-arm/cortex-a15/bionic/strcat.S",
+                    "arch-arm/cortex-a15/bionic/strcmp.S",
+                    "arch-arm/cortex-a15/bionic/strcpy.S",
+                    "arch-arm/cortex-a15/bionic/strlen.S",
                     "arch-arm/kryo/bionic/memcpy.S",
                     "arch-arm/cortex-a7/bionic/memset.S",
 
