@@ -900,7 +900,7 @@ cc_library_static {
 
                     "arch-arm/cortex-a9/bionic/stpcpy.S",
                     "arch-arm/cortex-a9/bionic/strcat.S",
-                    "arch-arm/cortex-a9/bionic/strcmp.S",
+                    "arch-arm/cortex-a15/bionic/strcmp.S",
                     "arch-arm/cortex-a9/bionic/strcpy.S",
                     "arch-arm/cortex-a9/bionic/strlen.S",
                 ],
@@ -910,7 +910,6 @@ cc_library_static {
 
                     "arch-arm/cortex-a15/bionic/stpcpy.S",
                     "arch-arm/cortex-a15/bionic/strcat.S",
-                    "arch-arm/cortex-a15/bionic/strcmp.S",
                     "arch-arm/cortex-a15/bionic/strcpy.S",
                     "arch-arm/cortex-a15/bionic/strlen.S",
                 ],
